@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BED0A7AD2A93D34C00016BE6 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED0A7AC2A93D34C00016BE6 /* Character.swift */; };
+		BED0A7B12A94358F00016BE6 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED0A7B02A94358F00016BE6 /* Home.storyboard */; };
 		F607247E2A92EE7C002A5FD9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F607247D2A92EE7C002A5FD9 /* Alamofire */; };
 		F60724812A92F16C002A5FD9 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = F60724802A92F16C002A5FD9 /* SDWebImage */; };
-		F60724832A9311BC002A5FD9 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60724822A9311BC002A5FD9 /* Api.swift */; };
+		F60724832A9311BC002A5FD9 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60724822A9311BC002A5FD9 /* Service.swift */; };
 		F68C63032A913E3A00F584E6 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C62FC2A913E3A00F584E6 /* HomePresenter.swift */; };
 		F68C63042A913E3A00F584E6 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C62FD2A913E3A00F584E6 /* HomeRouter.swift */; };
 		F68C63052A913E3A00F584E6 /* HomeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C62FE2A913E3A00F584E6 /* HomeModels.swift */; };
@@ -33,7 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F60724822A9311BC002A5FD9 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		BED0A7AC2A93D34C00016BE6 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		BED0A7B02A94358F00016BE6 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		F60724822A9311BC002A5FD9 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		F68C62FC2A913E3A00F584E6 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		F68C62FD2A913E3A00F584E6 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		F68C62FE2A913E3A00F584E6 /* HomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModels.swift; sourceTree = "<group>"; };
@@ -71,10 +75,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BED0A7AB2A93D27A00016BE6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BED0A7AC2A93D34C00016BE6 /* Character.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F607247B2A92EDF7002A5FD9 /* WebServices */ = {
 			isa = PBXGroup;
 			children = (
-				F60724822A9311BC002A5FD9 /* Api.swift */,
+				BED0A7AB2A93D27A00016BE6 /* Models */,
+				F60724822A9311BC002A5FD9 /* Service.swift */,
 			);
 			path = WebServices;
 			sourceTree = "<group>";
@@ -138,6 +151,7 @@
 				F68C63002A913E3A00F584E6 /* HomeInteractor.swift */,
 				F68C63012A913E3A00F584E6 /* HomeCells.swift */,
 				F68C63022A913E3A00F584E6 /* HomeConfigurator.swift */,
+				BED0A7B02A94358F00016BE6 /* Home.storyboard */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -225,6 +239,7 @@
 				F6A596122A91278800D2972A /* LaunchScreen.storyboard in Resources */,
 				F6A5960F2A91278800D2972A /* Assets.xcassets in Resources */,
 				F6A5960D2A91278500D2972A /* Main.storyboard in Resources */,
+				BED0A7B12A94358F00016BE6 /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F60724832A9311BC002A5FD9 /* Api.swift in Sources */,
+				F60724832A9311BC002A5FD9 /* Service.swift in Sources */,
 				F6A5960A2A91278500D2972A /* ViewController.swift in Sources */,
 				F68C63142A9140E100F584E6 /* MovieViewController.swift in Sources */,
 				F6A596062A91278500D2972A /* AppDelegate.swift in Sources */,
@@ -253,6 +268,7 @@
 				F68C63172A9140E100F584E6 /* MovieConfigurator.swift in Sources */,
 				F68C63162A9140E100F584E6 /* MovieCells.swift in Sources */,
 				F68C63092A913E3A00F584E6 /* HomeConfigurator.swift in Sources */,
+				BED0A7AD2A93D34C00016BE6 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

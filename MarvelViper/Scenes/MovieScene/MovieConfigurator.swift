@@ -15,9 +15,7 @@ import UIKit
 
 extension MovieViewController {
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        router.passDataToNextScene(segue: segue)
-    }
+ 
 
     override func awakeFromNib() {
         super.awakeFromNib()

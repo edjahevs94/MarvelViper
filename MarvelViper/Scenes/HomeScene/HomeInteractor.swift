@@ -23,13 +23,22 @@ class HomeInteractor {
 
     func dofetchHeroes(request: HomeScene.fetchHeroes.Request) {
         // NOTE: Pass the result to the Presenter
-        do {
-            presenter?.presentfetchHeroes(response: HomeScene.fetchHeroes.Response())
-        } catch {
-            presenter?.presentAlertError(response: HomeScene.AlertError.Response(
-                error: error
-            ))
+        MarvelService.shared.getCharacters { result in
+            let heroes = result.data.results
+            
+            for hero in heroes {
+                print("===\(hero.name)")
+            }
+            
         }
+        
+//        do {
+//            presenter?.presentfetchHeroes(response: HomeScene.fetchHeroes.Response())
+//        } catch {
+//            presenter?.presentAlertError(response: HomeScene.AlertError.Response(
+//                error: error
+//            ))
+//        }
     }
 
 }

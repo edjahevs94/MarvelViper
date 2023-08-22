@@ -37,8 +37,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         title = "Home"
         view.backgroundColor = .white
-       
-        //dofetchHeroes()
+        //HomeConfigurator.configure(viewController: self)
+        dofetchHeroes()
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -62,6 +62,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     // MARK: - Event handling
 
+    func testApi() {
+        MarvelService.shared.getCharacters { result in
+            print(result)
+        }
+    }
+    
     func dofetchHeroes() {
         // NOTE: Ask the Interactor to do some work
         // NOTE: Start loading animation here

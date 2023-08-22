@@ -12,13 +12,13 @@
 import UIKit
 
 // MARK: - Connect View, Interactor, and Presenter
-
+//
 extension HomeViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         router.passDataToNextScene(segue: segue)
     }
-
+    //esto solo se usa con el story board
     override func awakeFromNib() {
         super.awakeFromNib()
         HomeConfigurator.configure(viewController: self)
@@ -47,7 +47,7 @@ class HomeConfigurator {
         let router = HomeRouter()
         router.viewController = viewController
         router.interactor = interactor
-
+        
         viewController.interactor = interactor
         viewController.router = router
     }

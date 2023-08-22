@@ -33,7 +33,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         setupView()
         title = "Movie List"
         
-        //dofetchMovies()
+        dofetchMovies()
     }
 
     func setupView() {

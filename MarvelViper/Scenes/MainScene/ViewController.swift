@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     @objc func didTapButton() {
         let tabBarVC = UITabBarController()
         
-        let vc1 = UINavigationController(rootViewController: HomeViewController())
+        let vc1 = UINavigationController(rootViewController: HomeViewController.instantiate())
         vc1.title = "Home"
         let vc2 = UINavigationController(rootViewController: MovieViewController())
         vc2.title = "Movie"
