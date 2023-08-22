@@ -10,6 +10,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeCollectionCollectionViewCell: UICollectionViewCell {
 
@@ -19,13 +20,27 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
     let resourceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 10)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 3
+        label.text = "label"
+        
         return label
+    }()
+    
+    let resourceImage: UIImageView = {
+       let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true // par que se pegue a los limites de la celda
+        return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .white
         contentView.addSubview(resourceLabel)
+        contentView.addSubview(resourceImage)
         
     }
     
@@ -33,16 +48,30 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var displayedSomething: HomeScene.fetchHeroes.ViewModel.DisplayHero! {
+    var hero: HomeScene.fetchHeroes.ViewModel.DisplayHero! {
         didSet {
             // Configure cell from object
             // iconImageView.image = displayedSomething.image
-            resourceLabel.text = "label"
+            resourceLabel.text = hero.name
+            resourceImage.sd_setImage(with: URL(string: hero.photo))
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        //resourceLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        //resourceLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        resourceImage.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        resourceImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 2).isActive = true
+        resourceImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        resourceImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
+        
+        
+        resourceLabel.topAnchor.constraint(equalTo: resourceImage.bottomAnchor, constant: 2).isActive = true
+        resourceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        resourceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
+        resourceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+       
         
     }
 

@@ -11,10 +11,8 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
    
-    
-
     var interactor: HomeInteractor!
     var router: HomeRouter!
 
@@ -30,31 +28,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         table.frame = .zero
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
+        table.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         return table
     }()
     
-    
-    
-    
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.translatesAutoresizingMaskIntoConstraints = false
-
-        collection.register(HomeCollectionCollectionViewCell.self,
-                            forCellWithReuseIdentifier: HomeCollectionCollectionViewCell.identifier)
-        return collection
-    }()
-    
-    let headerView: UIView = {
-       let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray
-        return view
-        
-    }()
-
     // MARK: - View lifecycle
 
     override func viewDidLoad() {
@@ -64,17 +41,17 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
         
         dofetchHeroes()
-        collectionView.delegate = self
-        collectionView.dataSource = self
+      
         tableView.dataSource = self
         tableView.delegate = self
+        //view.addSubview(collectionView)
         view.addSubview(tableView)
         setupView()
     }
 
     func setupView() {
         // NOTE: Setup the view on load
-        
+    
         NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tableView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0).isActive = true
@@ -139,21 +116,111 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 100
     }
     
-    // MARK: - CollectionView Delegate Methods
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        heroes.count
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? TableHeader
+        header?.configure(heroes: heroes)
+        return header
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionCollectionViewCell.identifier, for: indexPath)
-        
-        cell.contentView.backgroundColor = .systemBlue
-        return cell
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 120
     }
+    
+    
+   
     
 }
 
+class TableHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UICollectionViewDataSource {
+    static let identifier = "header"
+    
+    var arrayHeroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero] = []
+
+    
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 30
+        layout.itemSize = CGSize(width: 100, height: 100)
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.backgroundColor = .systemGray
+        collection.register(HomeCollectionCollectionViewCell.self,
+                            forCellWithReuseIdentifier: HomeCollectionCollectionViewCell.identifier)
+        return collection
+    }()
+    
+    let headerImage: UIImageView = {
+       let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "ImageSample")
+        return imageView
+    }()
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        //contentView.addSubview(headerImage)
+        contentView.addSubview(collectionView)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero]) {
+        print("====\(heroes)")
+        arrayHeroes = heroes
+        collectionView.reloadData()
+
+    }
+    
+//    var heros: [HomeScene.fetchHeroes.ViewModel.DisplayHero]! {
+//        didSet {
+//            // Configure cell from object
+//            // iconImageView.image = displayedSomething.image
+//            arrayHeroes = heros
+//        }
+//    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+//        headerImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+//        headerImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//        headerImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+                NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: contentView.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0).isActive = true
+                NSLayoutConstraint(item: collectionView, attribute: .right, relatedBy: .equal, toItem: contentView, attribute: .right, multiplier: 1, constant: 0).isActive = true
+                NSLayoutConstraint(item: collectionView, attribute: .left, relatedBy: .equal, toItem: contentView, attribute: .left, multiplier: 1, constant: 0).isActive = true
+                NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: contentView.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        
+        
+        
+    }
+    
+    
+    
+    // MARK: - CollectionView Delegate Methods
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        arrayHeroes.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionCollectionViewCell.identifier, for: indexPath) as! HomeCollectionCollectionViewCell
+        
+        cell.hero = arrayHeroes[indexPath.row]
+        return cell
+    }
+
+}
 
 
 
