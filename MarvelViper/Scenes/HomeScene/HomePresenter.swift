@@ -20,7 +20,12 @@ class HomePresenter {
     func presentfetchHeroes(response: HomeScene.fetchHeroes.Response) {
         // NOTE: Format the response from the Interactor and pass the result back to the View Controller
         // NOTE: Remember to use workers if complex processing is required
-        viewController?.displayfetchHeroes(viewModel: HomeScene.fetchHeroes.ViewModel())
+        let displayedHeroes = response.heroes?.map { hero in
+            HomeScene.fetchHeroes.ViewModel.DisplayHero(id: hero.id, name: hero.name, photo: "\(hero.thumbnail.path).\(hero.thumbnail.thumbnailExtension)")
+        }
+        
+        
+        viewController?.displayfetchHeroes(viewModel: HomeScene.fetchHeroes.ViewModel(displayedHeroes: displayedHeroes ?? []))
     }
     
     func presentAlertError(response: HomeScene.AlertError.Response) {

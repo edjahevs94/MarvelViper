@@ -25,11 +25,7 @@ class HomeInteractor {
         // NOTE: Pass the result to the Presenter
         MarvelService.shared.getCharacters { result in
             let heroes = result.data.results
-            
-            for hero in heroes {
-                print("===\(hero.name)")
-            }
-            
+            self.presenter?.presentfetchHeroes(response: HomeScene.fetchHeroes.Response(heroes: heroes))
         }
         
 //        do {

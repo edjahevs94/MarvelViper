@@ -10,6 +10,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeTableViewCell: UITableViewCell {
     
@@ -26,11 +27,6 @@ class HomeTableViewCell: UITableViewCell {
     let resourceImage: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        //imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        //imageView.imageURL = URL(string: "https://picsum.photos/200/300")
-        //imageView.translatesAutoresizingMaskIntoConstraints = false
-        //imageView.imageURL = URL(string: "https://picsum.photos/200/300")
-        
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true // par que se pegue a los limites de la celda
         return imageView
@@ -48,14 +44,12 @@ class HomeTableViewCell: UITableViewCell {
     
     
     
-    var heroe: HomeScene.fetchHeroes.ViewModel.DisplayHeroes! {
+    var heroe: HomeScene.fetchHeroes.ViewModel.DisplayHero! {
         didSet {
             // Configure cell from object
-            // iconImageView.image = displayedSomething.image
-            // titleLabel.text = displayedSomething.title
-            // contentLabel.text = displayedSomething.content
+
             resourceLabel.text = heroe.name
-            resourceImage.image = UIImage(named: heroe.photo)
+            resourceImage.sd_setImage(with: URL(string: heroe.photo))
         }
     }
     

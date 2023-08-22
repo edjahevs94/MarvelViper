@@ -18,14 +18,16 @@ enum HomeScene {
         struct Request {
         }
         struct Response {
+            let heroes: [Result]?
+            
         }
         struct ViewModel {
-            struct DisplayHeroes {
-               
+            struct DisplayHero {
+                let id: Int
                 let name: String
                 let photo: String
             }
-            // let displayedSomethings: [DisplayedSomething]
+            let displayedHeroes: [DisplayHero]
         }
         
     }

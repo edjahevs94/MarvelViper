@@ -11,7 +11,9 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+   
+    
 
     var interactor: HomeInteractor!
     var router: HomeRouter!
@@ -19,7 +21,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - Object variables
 
     // NOTE: Only store objects here if required
-    private var heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHeroes] = [HomeScene.fetchHeroes.ViewModel.DisplayHeroes(name: "Spiderman 2099", photo: "ImageSample")]
+    private var heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero] = []
 
     // MARK: - Inteface objects
 
@@ -30,6 +32,28 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         table.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
         return table
     }()
+    
+    
+    
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+
+        collection.register(HomeCollectionCollectionViewCell.self,
+                            forCellWithReuseIdentifier: HomeCollectionCollectionViewCell.identifier)
+        return collection
+    }()
+    
+    let headerView: UIView = {
+       let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray
+        return view
+        
+    }()
 
     // MARK: - View lifecycle
 
@@ -37,8 +61,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         title = "Home"
         view.backgroundColor = .white
-        //HomeConfigurator.configure(viewController: self)
+   
+        
         dofetchHeroes()
+        collectionView.delegate = self
+        collectionView.dataSource = self
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -47,8 +74,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func setupView() {
         // NOTE: Setup the view on load
-        // somethingLabel.textColor = UIColor.blue
-       
+        
         NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tableView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0).isActive = true
@@ -79,8 +105,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func displayfetchHeroes(viewModel: HomeScene.fetchHeroes.ViewModel) {
         // NOTE: Display the result from the Presenter
         // NOTE: Stop loading animation here
-        // displayedSomething = viewModel.displayedSomething
-        // tableView.reloadData()
+        heroes = viewModel.displayedHeroes
+        tableView.reloadData()
     }
     
     func displayAlertError(viewModel: HomeScene.AlertError.ViewModel) {
@@ -112,5 +138,23 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
+    
+    // MARK: - CollectionView Delegate Methods
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        heroes.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionCollectionViewCell.identifier, for: indexPath)
+        
+        cell.contentView.backgroundColor = .systemBlue
+        return cell
+    }
+    
 }
+
+
+
+
+
