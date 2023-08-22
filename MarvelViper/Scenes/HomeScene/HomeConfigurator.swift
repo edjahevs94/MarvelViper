@@ -15,9 +15,9 @@ import UIKit
 //
 extension HomeViewController {
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        router.passDataToNextScene(segue: segue)
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        router.passDataToNextScene(segue: segue)
+//    }
     //esto solo se usa con el story board
     override func awakeFromNib() {
         super.awakeFromNib()

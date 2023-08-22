@@ -32,13 +32,14 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = false
         imageView.clipsToBounds = true // par que se pegue a los limites de la celda
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .white
+        //contentView.backgroundColor = .white
         contentView.addSubview(resourceLabel)
         contentView.addSubview(resourceImage)
         
@@ -61,15 +62,21 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         //resourceLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
         //resourceLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        resourceImage.widthAnchor.constraint(equalToConstant: 70).isActive = true
         resourceImage.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        resourceImage.layer.cornerRadius = 70 / 2
+        
         resourceImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 2).isActive = true
-        resourceImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
-        resourceImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
+        resourceImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        //resourceImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        //resourceImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
         
         
         resourceLabel.topAnchor.constraint(equalTo: resourceImage.bottomAnchor, constant: 2).isActive = true
-        resourceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
-        resourceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
+        resourceLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+//        resourceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+//        resourceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
         resourceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
        
         

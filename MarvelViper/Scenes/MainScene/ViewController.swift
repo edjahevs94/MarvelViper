@@ -11,7 +11,7 @@ class ViewController: UIViewController {
 
     
     private let button: UIButton = {
-        let button = UIButton()
+        let button = UIButton.init(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
         button.setTitle("Iniciar", for: .normal)
@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         
         view.addSubview(button)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
         assignbackground()
         setup()
     }
@@ -54,10 +55,10 @@ class ViewController: UIViewController {
         
         let vc1 = UINavigationController(rootViewController: HomeViewController.instantiate())
         vc1.title = "Home"
-        let vc2 = UINavigationController(rootViewController: MovieViewController())
-        vc2.title = "Movie"
+        let vc2 = UINavigationController(rootViewController: ComicListViewController.instantiate())
+        vc2.title = "Comics"
         tabBarVC.setViewControllers([vc1, vc2], animated: false)
-        let images = ["house.fill", "popcorn.fill"]
+        let images = ["house.fill", "book.fill"]
 
         guard let items = tabBarVC.tabBar.items else {
            return

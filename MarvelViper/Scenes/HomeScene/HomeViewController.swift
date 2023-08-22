@@ -110,6 +110,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        router.navigateToHero(heroId: heroes[indexPath.row].id)
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -146,7 +149,7 @@ class TableHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColl
         layout.itemSize = CGSize(width: 100, height: 100)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .systemGray
+        //collection.backgroundColor = .systemGray
         collection.register(HomeCollectionCollectionViewCell.self,
                             forCellWithReuseIdentifier: HomeCollectionCollectionViewCell.identifier)
         return collection
@@ -173,28 +176,18 @@ class TableHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColl
     }
     
     func configure(heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero]) {
-        print("====\(heroes)")
+      
         arrayHeroes = heroes
         collectionView.reloadData()
 
     }
     
-//    var heros: [HomeScene.fetchHeroes.ViewModel.DisplayHero]! {
-//        didSet {
-//            // Configure cell from object
-//            // iconImageView.image = displayedSomething.image
-//            arrayHeroes = heros
-//        }
-//    }
+
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-//        headerImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-//        headerImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
-//        headerImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        
+                
         
                 NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: contentView.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0).isActive = true
                 NSLayoutConstraint(item: collectionView, attribute: .right, relatedBy: .equal, toItem: contentView, attribute: .right, multiplier: 1, constant: 0).isActive = true
