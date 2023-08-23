@@ -23,13 +23,10 @@ class ComicListInteractor {
 
     func dofetchComics(request: ComicListScene.fetchComics.Request) {
         // NOTE: Pass the result to the Presenter
-//        do {
-//            presenter?.presentfetchComics(response: ComicListScene.fetchComics.Response())
-//        } catch {
-//            presenter?.presentAlertError(response: ComicListScene.AlertError.Response(
-//                error: error
-//            ))
-//        }
+        MarvelService.shared.getComics { result in
+            let comics = result.data.results
+            self.presenter?.presentfetchComics(response: ComicListScene.fetchComics.Response(comics: comics))
+        }
     }
 
 }

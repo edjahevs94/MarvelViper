@@ -23,6 +23,7 @@ enum ComicListScene {
         }
         struct ViewModel {
             struct DisplayedComic {
+                let id: Int
                 let title: String
                 let photo: String
             }

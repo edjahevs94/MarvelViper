@@ -53,6 +53,12 @@ class HomeTableViewCell: UITableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        resourceLabel.text = nil
+        resourceImage.image = nil
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         

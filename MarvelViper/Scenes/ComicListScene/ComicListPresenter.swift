@@ -20,8 +20,10 @@ class ComicListPresenter {
     func presentfetchComics(response: ComicListScene.fetchComics.Response) {
         // NOTE: Format the response from the Interactor and pass the result back to the View Controller
         // NOTE: Remember to use workers if complex processing is required
-        
-        //viewController?.displayfetchComics(viewModel: ComicListScene.fetchComics.ViewModel())
+        let displayComics = response.comics?.map({ comic in
+            ComicListScene.fetchComics.ViewModel.DisplayedComic(id: comic.id,title: comic.title, photo: "\(comic.thumbnail.path).jpg")
+        })
+        viewController?.displayfetchComics(viewModel: ComicListScene.fetchComics.ViewModel(displayedComics: displayComics ?? []))
     }
     
     func presentAlertError(response: ComicListScene.AlertError.Response) {

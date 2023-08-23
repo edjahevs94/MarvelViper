@@ -22,6 +22,8 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 10)
         label.lineBreakMode = .byWordWrapping
+        //label.backgroundColor = .green
+        label.textAlignment = .center
         label.numberOfLines = 3
         label.text = "label"
         
@@ -39,7 +41,7 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //contentView.backgroundColor = .white
+        //contentView.backgroundColor = .gray
         contentView.addSubview(resourceLabel)
         contentView.addSubview(resourceImage)
         
@@ -72,12 +74,12 @@ class HomeCollectionCollectionViewCell: UICollectionViewCell {
         //resourceImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
         //resourceImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
         
-        
+        resourceLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
         resourceLabel.topAnchor.constraint(equalTo: resourceImage.bottomAnchor, constant: 2).isActive = true
         resourceLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
 //        resourceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
 //        resourceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5).isActive = true
-        resourceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+        resourceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
        
         
     }

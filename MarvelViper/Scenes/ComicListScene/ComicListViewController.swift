@@ -19,25 +19,42 @@ class ComicListViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Object variables
 
     // NOTE: Only store objects here if required
-    private var displayedSomethings: [ComicListScene.fetchComics.ViewModel.DisplayedComic] = []
+    private var displayComics: [ComicListScene.fetchComics.ViewModel.DisplayedComic] = []
 
     // MARK: - Inteface objects
 
-    
+    let tableView: UITableView = {
+       let table = UITableView()
+        table.frame = .zero
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.register(ComicListTableViewCell.self, forCellReuseIdentifier: ComicListTableViewCell.identifier)
+        
+        return table
+    }()
 
     // MARK: - View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Comics"
-        setupView()
+        
         //doTestApi()
         dofetchComics()
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        view.addSubview(tableView)
+       
+        setupView()
     }
 
     func setupView() {
         // NOTE: Setup the view on load
-        // somethingLabel.textColor = UIColor.blue
+        
+            NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: tableView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: tableView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0).isActive = true
     }
 
     // MARK: - Interaction handling
@@ -63,8 +80,8 @@ class ComicListViewController: UIViewController, UITableViewDataSource, UITableV
     func displayfetchComics(viewModel: ComicListScene.fetchComics.ViewModel) {
         // NOTE: Display the result from the Presenter
         // NOTE: Stop loading animation here
-        // displayedSomething = viewModel.displayedSomething
-        // tableView.reloadData()
+        displayComics = viewModel.displayedComics
+        tableView.reloadData()
     }
     
     func displayAlertError(viewModel: ComicListScene.AlertError.ViewModel) {
@@ -77,13 +94,13 @@ class ComicListViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - TableView DataSource Methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedSomethings.count
+        return displayComics.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let displayedSomething = displayedSomethings[indexPath.row]
+        let comic = displayComics[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ComicListTableViewCell.identifier, for: indexPath) as! ComicListTableViewCell
-        // cell.titleLabel.text = displayedSomething.title
+        cell.comic = comic
         return cell
     }
 
@@ -91,6 +108,12 @@ class ComicListViewController: UIViewController, UITableViewDataSource, UITableV
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        router.navigateToComic(comicId: displayComics[indexPath.row].id)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 
 }
