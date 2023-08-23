@@ -37,7 +37,7 @@ class ComicListViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Comics"
-        
+        view.backgroundColor = .white
         //doTestApi()
         dofetchComics()
         tableView.dataSource = self

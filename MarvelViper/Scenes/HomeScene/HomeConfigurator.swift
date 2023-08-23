@@ -19,14 +19,15 @@ extension HomeViewController {
 //        router.passDataToNextScene(segue: segue)
 //    }
     //esto solo se usa con el story board
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        HomeConfigurator.configure(viewController: self)
-    }
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        HomeConfigurator.configure(viewController: self)
+//    }
 
     static func instantiate() -> HomeViewController {
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let viewController = storyboard.instantiateInitialViewController() as! HomeViewController
+        
+        let viewController = HomeViewController()
+        HomeConfigurator.configure(viewController: viewController)
         return viewController
     }
 

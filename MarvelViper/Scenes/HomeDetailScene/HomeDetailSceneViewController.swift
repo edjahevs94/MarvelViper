@@ -53,6 +53,8 @@ class HomeDetailSceneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        view.backgroundColor = .white
         
         view.addSubview(resourceTitle)
         view.addSubview(resourceImage)

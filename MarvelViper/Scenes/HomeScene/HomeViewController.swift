@@ -36,10 +36,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         title = "Home"
         view.backgroundColor = .white
    
-        
+       
         dofetchHeroes()
       
         tableView.dataSource = self

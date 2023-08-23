@@ -15,18 +15,19 @@ import UIKit
 
 extension HomeDetailSceneViewController {
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        router.passDataToNextScene(segue: segue)
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        HomeDetailSceneConfigurator.configure(viewController: self)
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        router.passDataToNextScene(segue: segue)
+//    }
+//
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        HomeDetailSceneConfigurator.configure(viewController: self)
+//    }
 
     static func instantiate(heroId: Int) -> HomeDetailSceneViewController {
-        let storyboard = UIStoryboard(name: "HomeDetail", bundle: nil)
-        let viewController = storyboard.instantiateInitialViewController() as! HomeDetailSceneViewController
+     
+        let viewController = HomeDetailSceneViewController()
+        HomeDetailSceneConfigurator.configure(viewController: viewController)
         viewController.interactor.heroId = heroId
         return viewController
     }

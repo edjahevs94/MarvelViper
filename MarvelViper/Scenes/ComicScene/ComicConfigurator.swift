@@ -15,18 +15,19 @@ import UIKit
 
 extension ComicViewController {
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        router.passDataToNextScene(segue: segue)
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        ComicConfigurator.configure(viewController: self)
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        router.passDataToNextScene(segue: segue)
+//    }
+//
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        ComicConfigurator.configure(viewController: self)
+//    }
 
     static func instantiate(comicId: Int) -> ComicViewController {
-        let storyboard = UIStoryboard(name: "Comic", bundle: nil)
-        let viewController = storyboard.instantiateInitialViewController() as! ComicViewController
+        
+        let viewController = ComicViewController()
+        ComicConfigurator.configure(viewController: viewController)
         viewController.interactor.comicId = comicId
         return viewController
     }
