@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     // NOTE: Only store objects here if required
     private var heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero] = []
+    private var spinner : UIActivityIndicatorView!
 
     // MARK: - Inteface objects
 
@@ -39,20 +40,33 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
        
         title = "Home"
         view.backgroundColor = .white
-   
+        makeSpinner()
        
         dofetchHeroes()
       
         tableView.dataSource = self
         tableView.delegate = self
-        //view.addSubview(collectionView)
         view.addSubview(tableView)
+        view.addSubview(spinner)
         setupView()
     }
 
+    func makeSpinner(){
+            let spinner = UIActivityIndicatorView()
+            
+            spinner.hidesWhenStopped = true
+            spinner.isHidden = false
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.spinner = spinner
+        }
+    
     func setupView() {
         // NOTE: Setup the view on load
     
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
         NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tableView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0).isActive = true
@@ -75,6 +89,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func dofetchHeroes() {
         // NOTE: Ask the Interactor to do some work
         // NOTE: Start loading animation here
+        spinner.startAnimating()
         interactor.dofetchHeroes(request: HomeScene.fetchHeroes.Request())
     }
 
@@ -83,6 +98,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func displayfetchHeroes(viewModel: HomeScene.fetchHeroes.ViewModel) {
         // NOTE: Display the result from the Presenter
         // NOTE: Stop loading animation here
+        spinner.stopAnimating()
         heroes = viewModel.displayedHeroes
         tableView.reloadData()
     }
@@ -123,7 +139,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? TableHeader
-        header?.configure(heroes: heroes)
+        header?.configure(heroes: heroes, router: router)
         return header
     }
     
@@ -140,7 +156,7 @@ class TableHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColl
     static let identifier = "header"
     
     var arrayHeroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero] = []
-
+    var headerRouter: HomeRouter!
     
     
     let collectionView: UICollectionView = {
@@ -176,8 +192,9 @@ class TableHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColl
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero]) {
+    func configure(heroes: [HomeScene.fetchHeroes.ViewModel.DisplayHero], router: HomeRouter) {
       
+        headerRouter = router
         arrayHeroes = heroes
         collectionView.reloadData()
 
@@ -212,6 +229,10 @@ class TableHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColl
         
         cell.hero = arrayHeroes[indexPath.row]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        headerRouter.navigateToHero(heroId: arrayHeroes[indexPath.row].id)
     }
 
 }

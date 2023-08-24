@@ -26,6 +26,10 @@ class ComicPresenter {
         viewController?.displayfetchComic(viewModel: ComicScene.fetchComic.ViewModel(displayComic: displayedComic ?? []))
     }
     
+    func presentfetchComic(response: ComicScene.fetchCharacter.Response) {
+        
+    }
+    
     func presentAlertError(response: ComicScene.AlertError.Response) {
         viewController?.displayAlertError(viewModel: ComicScene.AlertError.ViewModel(
             message: response.error.localizedDescription

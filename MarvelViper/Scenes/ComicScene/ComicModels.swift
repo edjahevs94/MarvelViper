@@ -32,6 +32,24 @@ enum ComicScene {
         
     }
     
+    enum fetchCharacter {
+        
+        struct Request {
+        }
+        struct Response {
+            let character: [Result]?
+        }
+        struct ViewModel {
+            struct DisplayCharacter {
+                let id: Int
+                let name: String
+                let photo: String
+            }
+            let displayCharacter: [DisplayCharacter]
+        }
+        
+    }
+    
     enum AlertError {
         
         struct Response {

@@ -15,22 +15,59 @@ class ComicTableViewCell: UITableViewCell {
 
     static let identifier = "ComicTableViewCell"
 
-    // @IBOutlet weak var iconImageView: UIImageView!
-    // @IBOutlet weak var titleLabel:    UILabel!
-    // @IBOutlet weak var contentLabel:  UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Configure cell initial settings
+    let resourceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 3
+        return label
+    }()
+    
+    let resourceImage: UIImageView = {
+       let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true // par que se pegue a los limites de la celda
+        return imageView
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(resourceImage)
+        contentView.addSubview(resourceLabel)
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
-    var displayedSomething: ComicScene.___VARIABLE_useCase___.ViewModel.DisplayedSomething! {
+    var hero: ComicScene.fetchCharacter.ViewModel.DisplayCharacter! {
         didSet {
             // Configure cell from object
             // iconImageView.image = displayedSomething.image
             // titleLabel.text = displayedSomething.title
             // contentLabel.text = displayedSomething.content
         }
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        
+        
+        resourceImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        resourceImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
+        resourceImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
+        resourceImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+        
+        resourceLabel.leadingAnchor.constraint(equalTo: resourceImage.trailingAnchor, constant: 35).isActive = true
+        resourceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        resourceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        
+        
     }
 
 }

@@ -30,5 +30,14 @@ class ComicInteractor {
             self.presenter?.presentfetchComic(response: ComicScene.fetchComic.Response(comic: comic))
         }
     }
+    
+    func dofetchCharacters(request: ComicScene.fetchCharacter.Request) {
+        
+        MarvelService.shared.getComicCharacters(comicId: comicId!) { result in
+            let characters = result.data.results
+            print("=== \(characters)")
+        }
+        
+    }
 
 }

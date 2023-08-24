@@ -11,7 +11,9 @@
 
 import UIKit
 
-class ComicViewController: UIViewController {
+class ComicViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
 
     var interactor: ComicInteractor!
     var router: ComicRouter!
@@ -20,6 +22,8 @@ class ComicViewController: UIViewController {
 
     // NOTE: Only store objects here if required
     private var comic: [ComicScene.fetchComic.ViewModel.DisplayComic] = []
+    
+    private var character: [ComicScene.fetchCharacter.ViewModel.DisplayCharacter] = []
 
     // MARK: - Inteface objects
     let resourceDescription: UILabel = {
@@ -47,6 +51,14 @@ class ComicViewController: UIViewController {
         //imageView.clipsToBounds = true // par que se pegue a los limites de la celda
         return imageView
     }()
+    
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.frame = .zero
+        table.translatesAutoresizingMaskIntoConstraints = false
+        
+        return table
+    }()
    
 
     // MARK: - View lifecycle
@@ -61,6 +73,7 @@ class ComicViewController: UIViewController {
         
         setupView()
         dofetchComic()
+        dofetchCharacters()
     }
 
     func setupView() {
@@ -93,6 +106,10 @@ class ComicViewController: UIViewController {
         // NOTE: Start loading animation here
         interactor.dofetchComic(request: ComicScene.fetchComic.Request())
     }
+    
+    func dofetchCharacters() {
+        interactor.dofetchCharacters(request: ComicScene.fetchCharacter.Request())
+    }
 
     // MARK: - Display logic
     
@@ -112,11 +129,37 @@ class ComicViewController: UIViewController {
         
     }
     
+    func displayfetchVharacter(viewModel: ComicScene.fetchCharacter.ViewModel) {
+        
+    }
+    
+    
     func displayAlertError(viewModel: ComicScene.AlertError.ViewModel) {
         // NOTE: Stop loading animation here
         let alert = UIAlertController(title: "Error", message: viewModel.message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    
+    // MARK: - TableView DataSource Methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(frame: .zero)
+        return cell
+    }
+    
+    
+    
+    // MARK: - TableView Delegate Methods
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //
+    }
+    
 
 }
